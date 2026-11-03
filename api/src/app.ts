@@ -19,11 +19,13 @@
 import express from 'express';
 import userRoutes from './routes/user.routes.js';
 import productoRoutes from './routes/producto.routes.js'
+import ventaRoutes from './routes/venta.routes.js';
 
 const app = express();
 
 app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api',productoRoutes);
+app.use('/api',ventaRoutes);
 
 export default app;
