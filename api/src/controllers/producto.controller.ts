@@ -20,3 +20,31 @@ export const createProducts=async(req:Request,resp:Response)=>{
         data:product
     })
 }
+
+export const updateProducts=async(req:Request,resp:Response)=>{
+    const id=Number(req.params.id);
+    const {nombre,precio,stock,categoriaId}=req.body;
+    const product=await productoRepository.update(id,{nombre,precio,stock,categoriaId});
+    if(!product){
+        return resp.status(404).json({message:"Producto no encontrado",
+            status:404
+        })
+    }
+    return resp.json({message:"Producto actualizado",
+        status:200,
+        data:product
+    })
+}
+
+export const deleteProducts=async(req:Request,resp:Response)=>{
+    const id=Number(req.params.id);
+    const eliminado=await productoRepository.delete(id);
+    if(!eliminado){
+        return resp.status(404).json({message:"Producto no encontrado",
+            status:404
+        })
+    }
+    return resp.json({message:"Producto eliminado",
+        status:200
+    })
+}
