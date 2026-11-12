@@ -1,0 +1,67 @@
+Table cliente{
+id_cliente int [primary key,increment,not null]
+nombre_cliente varchar [not null]
+estado_cliente varchar [not null, check: `estado_cliente in('ACTIVO','INACTIVO')`]
+limite_credito decimal [not null, check: `limite_credito>=0`]
+}
+
+Table direccion{
+id_direccion int [primary key, increment,not null]
+direccion_origen varchar [not null]
+direccion_destino varchar [not null]
+id_cliente int [not null]
+}
+
+Table envio{
+id_envio int [primary key, increment,not null]
+remitente int [not null]
+destinatario int [not null]
+costo_total decimal [not null, check: `costo_total>=0`]
+fecha timestamp [not null]
+estado_envio varchar [not null, check: `estado_envio in ('REGISTRADO','EN TRANSITO','ENTREGADO','CANCELADO')`]
+id_direccion int [not null]
+}
+
+Table paquete{
+id_paquete int [primary key, increment,not null]
+peso_paquete decimal [not null, check: `peso_paquete>0`]
+dimensiones varchar [not null]
+contenido_paquete varchar [not null]
+id_almacen int
+id_envio int [not null]
+}
+
+Table almacen{
+id_almacen int [primary key,increment,not null]
+nombre_almacen varchar [not null]
+ubicacion varchar [not null]
+capacidad_maxima int [not null, check:`capacidad_maxima>0`]
+cantidad_paquetes int [not null, check: `cantidad_paquetes<=capacidad_maxima AND cantidad_paquetes>=0`]
+}
+
+Table historial{
+id_historial int [primary key, increment,not null]
+fecha timestamp [not null]
+ubicacion_actual varchar [not null]
+estado_envio varchar [not null,check: `estado_envio in ('REGISTRADO','EN TRANSITO','ENTREGADO','CANCELADO')`]
+observaciones text [not null]
+id_envio int [not null]
+}
+
+Table auditoria{
+id_auditoria int [primary key, increment, not null]
+costo_anterior decimal [not null]
+costo_nuevo decimal [not null]
+usuario varchar [not null]
+fecha_modificacion timestamp [not null]
+id_envio int [not null]
+}
+
+Ref: cliente.id_cliente < direccion.id_cliente
+Ref: cliente.id_cliente < envio.remitente
+Ref: cliente.id_cliente < envio.destinatario
+Ref: direccion.id_direccion < envio.id_direccion
+Ref: envio.id_envio < paquete.id_envio
+Ref: paquete.id_almacen >? almacen.id_almacen
+Ref: historial.id_envio > envio.id_envio
+Ref:auditoria.id_envio > envio.id_envio
