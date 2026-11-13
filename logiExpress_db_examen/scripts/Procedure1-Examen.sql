@@ -17,7 +17,7 @@ BEGIN
     WHERE e.remitente = p_id_cliente
       AND MONTH(e.fecha) = p_mes
       AND YEAR(e.fecha) = p_anio
-      AND e.estado_envio <> 'CANCELADO';
+      AND e.estado_envio != 'CANCELADO';
 END;;
 
 DELIMITER ;
