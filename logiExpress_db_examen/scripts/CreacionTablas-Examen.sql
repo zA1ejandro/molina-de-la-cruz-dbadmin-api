@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS logiExspress_db;
+CREATE DATABASE IF NOT EXISTS logiExpress_db;
 
-USE logiExspress_db;
+USE logiExpress_db;
 
 CREATE TABLE IF NOT EXISTS cliente(
     id_cliente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,

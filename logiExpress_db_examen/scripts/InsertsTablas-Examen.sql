@@ -1,4 +1,4 @@
-USE logiExspress_db;
+USE logiExpress_db;
 
 INSERT INTO cliente (nombre_cliente, estado_cliente, limite_credito) VALUES
 ('Ichigo Kurosaki',  'ACTIVO',   15000.00),
